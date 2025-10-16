@@ -107,27 +107,33 @@ user_problem_statement: "Landing page profesional para PurpleHunt.es - servicio 
 backend:
   - task: "POST /api/contact - Crear mensaje de contacto"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoint implementado con validación de campos, almacenamiento en MongoDB y respuestas en español"
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE TESTING PASSED - All 17 test scenarios successful: (1) Valid data submission returns correct response structure with success=true, message='Mensaje enviado correctamente', and UUID ID. (2) All field validations working: missing fields (422), invalid email formats (422), message length 10-2000 chars (422), nombre/empresa max 200 chars (422). (3) Data persistence verified in MongoDB. (4) Whitespace stripping functional. Backend logs show proper contact creation and validation rejections."
   
   - task: "GET /api/contact - Obtener mensajes de contacto"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoint para obtener todos los mensajes ordenados por fecha (propósito administrativo)"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTING PASSED - Endpoint returns proper JSON array of contacts. Date sorting verified (newest first). All required fields present in response: id, nombre, email, empresa, mensaje, created_at. Data structure matches Contact model. Multiple contacts tested and ordering confirmed."
 
 frontend:
   - task: "Landing page con Hero Section"
