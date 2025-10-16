@@ -37,6 +37,31 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class ContactCreate(BaseModel):
+    nombre: str = Field(..., min_length=1, max_length=200)
+    email: EmailStr
+    empresa: str = Field(..., min_length=1, max_length=200)
+    mensaje: str = Field(..., min_length=10, max_length=2000)
+
+    @validator('nombre', 'empresa', 'mensaje')
+    def strip_whitespace(cls, v):
+        return v.strip()
+
+class Contact(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    nombre: str
+    email: str
+    empresa: str
+    mensaje: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class ContactResponse(BaseModel):
+    success: bool
+    message: str
+    id: Optional[str] = None
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
