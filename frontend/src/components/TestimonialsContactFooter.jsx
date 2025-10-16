@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Mail, Building, User, MessageSquare, Send } from 'lucide-react';
-import { testimonials, contactFormSubmit } from '../mock';
+import { testimonials } from '../mock';
 import { toast } from 'sonner';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -100,11 +103,17 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await contactFormSubmit(formData);
-      toast.success(result.message);
-      setFormData({ nombre: '', email: '', empresa: '', mensaje: '' });
+      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
+      
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setFormData({ nombre: '', email: '', empresa: '', mensaje: '' });
+      } else {
+        toast.error('Error al enviar el mensaje');
+      }
     } catch (error) {
-      toast.error('Error al enviar el mensaje');
+      console.error('Error submitting contact form:', error);
+      toast.error('Error al enviar el mensaje. Por favor, intenta de nuevo.');
     } finally {
       setIsSubmitting(false);
     }
