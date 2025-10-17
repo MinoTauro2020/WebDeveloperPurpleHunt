@@ -4,7 +4,7 @@ import { methodology } from '../mock';
 
 const MethodologySection = () => {
   return (
-    <section className="relative bg-black py-24">
+    <section id="metodologia" className="relative bg-black py-24">
       {/* Background Grid */}
       <div
         className="absolute inset-0 opacity-5"
