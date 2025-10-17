@@ -62,6 +62,24 @@ const Header = () => {
             Servicios
           </button>
           <button
+            onClick={() => scrollToSection('metodologia')}
+            className="text-white/60 hover:text-white text-lg font-medium transition-colors duration-300"
+          >
+            Metodología
+          </button>
+          <button
+            onClick={() => scrollToSection('apt-groups')}
+            className="text-white/60 hover:text-white text-lg font-medium transition-colors duration-300"
+          >
+            Amenazas APT
+          </button>
+          <button
+            onClick={() => scrollToSection('glosario')}
+            className="text-white/60 hover:text-white text-lg font-medium transition-colors duration-300"
+          >
+            Glosario
+          </button>
+          <button
             onClick={() => scrollToSection('contacto')}
             className="text-white/60 hover:text-white text-lg font-medium transition-colors duration-300"
           >
