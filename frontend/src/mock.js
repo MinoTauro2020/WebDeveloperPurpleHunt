@@ -282,13 +282,3 @@ export const testimonials = [
     role: "Director de Seguridad"
   }
 ];
-
-export const contactFormSubmit = (formData) => {
-  // Mock function para simular envío de formulario
-  console.log('Formulario enviado (mock):', formData);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ success: true, message: 'Mensaje enviado correctamente' });
-    }, 1000);
-  });
-};
