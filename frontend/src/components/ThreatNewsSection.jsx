@@ -35,7 +35,7 @@ const ThreatNewsSection = () => {
   };
 
   return (
-    <section className="relative bg-black py-24">
+    <section id="threat-news" className="relative bg-black py-24">
       <div className="max-w-[1400px] mx-auto px-[7.6923%]">
         {/* Section Header */}
         <div className="text-center mb-16">
