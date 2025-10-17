@@ -233,18 +233,9 @@ def send_email_notification(contact_data: dict) -> bool:
     
     CONFIGURACIÓN REQUERIDA:
     ======================
-    Debes crear un archivo .env en la carpeta /backend con estas variables:
-    
+    Variables de entorno en .env:
     GMAIL_USER=ahfseguridad@gmail.com
-    GMAIL_APP_PASSWORD=tu_contraseña_de_aplicacion_aqui
-    
-    Cómo obtener GMAIL_APP_PASSWORD:
-    1. Ve a https://myaccount.google.com/security
-    2. Activa "Verificación en dos pasos"
-    3. Busca "Contraseñas de aplicaciones"
-    4. Genera una nueva contraseña para "Correo"
-    5. Copia la contraseña de 16 caracteres (sin espacios)
-    6. Pégala en el archivo .env como GMAIL_APP_PASSWORD
+    GMAIL_APP_PASSWORD=tu_contraseña_de_aplicacion_16_caracteres
     """
     try:
         # Leer configuración del .env
