@@ -6,7 +6,7 @@ const APTGroupsSection = () => {
   const getOriginIcon = () => <Globe size={24} />;
 
   return (
-    <section className="relative bg-black py-24">
+    <section id="apt-groups" className="relative bg-black py-24">
       <div className="max-w-[1400px] mx-auto px-[7.6923%]">
         {/* Section Header */}
         <div className="text-center mb-16">
