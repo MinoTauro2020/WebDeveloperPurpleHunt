@@ -164,3 +164,89 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+# Email Configuration Function
+def send_email_notification(contact_data: dict) -> bool:
+    """
+    Envía un email de notificación cuando se recibe un mensaje del formulario de contacto.
+    
+    CONFIGURACIÓN REQUERIDA:
+    ======================
+    Debes crear un archivo .env en la carpeta /backend con estas variables:
+    
+    GMAIL_USER=ahfseguridad@gmail.com
+    GMAIL_APP_PASSWORD=tu_contraseña_de_aplicacion_aqui
+    
+    Cómo obtener GMAIL_APP_PASSWORD:
+    1. Ve a https://myaccount.google.com/security
+    2. Activa "Verificación en dos pasos"
+    3. Busca "Contraseñas de aplicaciones"
+    4. Genera una nueva contraseña para "Correo"
+    5. Copia la contraseña de 16 caracteres (sin espacios)
+    6. Pégala en el archivo .env como GMAIL_APP_PASSWORD
+    """
+    try:
+        # Leer configuración del .env
+        gmail_user = os.environ.get('GMAIL_USER')
+        gmail_password = os.environ.get('GMAIL_APP_PASSWORD')
+        
+        # Validar que las credenciales estén configuradas
+        if not gmail_user or not gmail_password:
+            logger.error("Email credentials not configured. Please set GMAIL_USER and GMAIL_APP_PASSWORD in .env file")
+            return False
+        
+        # Crear el mensaje de email
+        msg = MIMEMultipart('alternative')
+        msg['From'] = gmail_user
+        msg['To'] = gmail_user  # Enviamos el mensaje a nosotros mismos
+        msg['Subject'] = f"🔒 Nuevo mensaje de contacto - PurpleHunt.es"
+        
+        # Crear el cuerpo del email en HTML
+        html_body = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; background-color: #000000; color: #ffffff; padding: 20px;">
+                <div style="max-width: 600px; margin: 0 auto; background-color: #1a1a1a; border: 2px solid #A020F0; padding: 30px;">
+                    <h2 style="color: #A020F0; border-bottom: 2px solid #A020F0; padding-bottom: 10px;">
+                        🔒 Nuevo Mensaje de Contacto - PurpleHunt.es
+                    </h2>
+                    
+                    <div style="margin: 20px 0;">
+                        <p style="margin: 10px 0;"><strong style="color: #A020F0;">Nombre:</strong> {contact_data['nombre']}</p>
+                        <p style="margin: 10px 0;"><strong style="color: #A020F0;">Email:</strong> {contact_data['email']}</p>
+                        <p style="margin: 10px 0;"><strong style="color: #A020F0;">Empresa:</strong> {contact_data['empresa']}</p>
+                    </div>
+                    
+                    <div style="margin: 20px 0; padding: 15px; background-color: #0a0a0a; border-left: 4px solid #A020F0;">
+                        <p style="margin: 0;"><strong style="color: #A020F0;">Mensaje:</strong></p>
+                        <p style="margin: 10px 0; line-height: 1.6;">{contact_data['mensaje']}</p>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #333;">
+                        <p style="color: #888; font-size: 12px; margin: 0;">
+                            Este email fue enviado automáticamente desde el formulario de contacto de PurpleHunt.es
+                        </p>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        
+        # Adjuntar el HTML al mensaje
+        html_part = MIMEText(html_body, 'html')
+        msg.attach(html_part)
+        
+        # Conectar al servidor SMTP de Gmail y enviar
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(gmail_user, gmail_password)
+            server.send_message(msg)
+        
+        logger.info(f"Email sent successfully to {gmail_user} from {contact_data['email']}")
+        return True
+        
+    except smtplib.SMTPAuthenticationError:
+        logger.error("SMTP Authentication failed. Check your GMAIL_USER and GMAIL_APP_PASSWORD in .env file")
+        return False
+    except Exception as e:
+        logger.error(f"Error sending email: {str(e)}")
+        return False
