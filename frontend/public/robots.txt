@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://purplehunt.es/sitemap.xml
+
+# Páginas específicas
+Allow: /servicios
+Allow: /metodologia
+Allow: /apt-groups
+Allow: /glosario
+Allow: /contacto
+
+# Excluir archivos innecesarios para indexar
+Disallow: /static/
+Disallow: /*.json$
+Disallow: /manifest.json
+Disallow: /*.map$
