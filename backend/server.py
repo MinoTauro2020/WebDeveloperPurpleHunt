@@ -155,7 +155,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -167,9 +167,63 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
+# Serve React Frontend (después de las rutas API)
+try:
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+    import os
+    
+    # Detectar si estamos en desarrollo (Emergent) o producción (VPS)
+    # En Emergent: /app/frontend/build
+    # En VPS: /home/purplehunt.es/public_html/WebDeveloperPurpleHunt/frontend/build
+    
+    FRONTEND_BUILD_PATH = os.environ.get('FRONTEND_BUILD_PATH', '/app/frontend/build')
+    
+    if os.path.exists(FRONTEND_BUILD_PATH):
+        # Servir archivos estáticos de React
+        static_path = os.path.join(FRONTEND_BUILD_PATH, 'static')
+        if os.path.exists(static_path):
+            app.mount("/static", StaticFiles(directory=static_path), name="static")
+        
+        app.mount("/assets", StaticFiles(directory=FRONTEND_BUILD_PATH), name="assets")
+        logger.info(f"Serving frontend from: {FRONTEND_BUILD_PATH}")
+    else:
+        logger.warning(f"Frontend build not found at: {FRONTEND_BUILD_PATH}")
+        
+except Exception as e:
+    logger.error(f"Error mounting frontend: {e}")
+
+
+@app.get("/{full_path:path}")
+async def serve_react_app(full_path: str):
+    """
+    Serve React app for all routes (catch-all)
+    This must be registered AFTER all API routes
+    """
+    try:
+        FRONTEND_BUILD_PATH = os.environ.get('FRONTEND_BUILD_PATH', '/app/frontend/build')
+        index_path = os.path.join(FRONTEND_BUILD_PATH, 'index.html')
+        
+        if os.path.exists(index_path):
+            return FileResponse(index_path)
+        else:
+            return {"message": "Frontend not built yet", "path": FRONTEND_BUILD_PATH}
+    except Exception as e:
+        logger.error(f"Error serving React app: {e}")
+        return {"message": "Error loading frontend", "error": str(e)}
+
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get('PORT', 8001))
+    logger.info(f"Starting server on port {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 
 # Email Configuration Function
