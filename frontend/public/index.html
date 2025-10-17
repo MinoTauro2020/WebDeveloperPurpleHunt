@@ -1,48 +1,159 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A product of emergent.sh" />
-        <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-        <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-        <title>Emergent | Fullstack App</title>
+        <meta name="theme-color" content="#A020F0" />
+        
+        <!-- SEO Meta Tags -->
+        <title>PurpleHunt.es - Ciberseguridad Purple Team en Alicante | Pentesting y Threat Hunting</title>
+        <meta name="description" content="Servicios de ciberseguridad Purple Team en Alicante, Comunidad Valenciana. Pentesting, threat hunting, SIEM, EDR y protección contra APT. Expertos en Red Team y Blue Team para empresas en España." />
+        <meta name="keywords" content="ciberseguridad alicante, pentesting alicante, red team alicante, blue team españa, purple team valencia, threat hunting comunidad valenciana, seguridad informatica alicante, pentest españa, apt protection alicante, siem edr alicante, incident response valencia, hardening sistemas alicante" />
+        <meta name="author" content="PurpleHunt.es" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://purplehunt.es" />
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://purplehunt.es" />
+        <meta property="og:title" content="PurpleHunt.es - Ciberseguridad Purple Team en Alicante" />
+        <meta property="og:description" content="Expertos en pentesting, threat hunting y protección contra APT en Alicante y Comunidad Valenciana. Purple Team para empresas." />
+        <meta property="og:image" content="https://purplehunt.es/og-image.png" />
+        <meta property="og:locale" content="es_ES" />
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://purplehunt.es" />
+        <meta property="twitter:title" content="PurpleHunt.es - Ciberseguridad Purple Team en Alicante" />
+        <meta property="twitter:description" content="Expertos en pentesting, threat hunting y protección contra APT en Alicante y Comunidad Valenciana." />
+        <meta property="twitter:image" content="https://purplehunt.es/twitter-image.png" />
+        
+        <!-- Geo Tags for Local SEO -->
+        <meta name="geo.region" content="ES-VC" />
+        <meta name="geo.placename" content="Alicante" />
+        <meta name="geo.position" content="38.3452;-0.4815" />
+        <meta name="ICBM" content="38.3452, -0.4815" />
+        
+        <!-- Schema.org Structured Data for Local Business -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "PurpleHunt.es",
+          "image": "https://purplehunt.es/logo.png",
+          "description": "Servicios profesionales de ciberseguridad Purple Team: pentesting, threat hunting, protección contra APT, SIEM, EDR e incident response en Alicante y Comunidad Valenciana.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Alicante",
+            "addressRegion": "Comunidad Valenciana",
+            "addressCountry": "ES"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.3452,
+            "longitude": -0.4815
+          },
+          "url": "https://purplehunt.es",
+          "email": "ahfseguridad@gmail.com",
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Alicante"
+            },
+            {
+              "@type": "State",
+              "name": "Comunidad Valenciana"
+            },
+            {
+              "@type": "Country",
+              "name": "España"
+            }
+          ],
+          "priceRange": "€€€",
+          "serviceType": [
+            "Pentesting",
+            "Red Team",
+            "Blue Team",
+            "Purple Team",
+            "Threat Hunting",
+            "Incident Response",
+            "SIEM Configuration",
+            "EDR Hardening",
+            "APT Protection",
+            "Cybersecurity Consulting"
+          ],
+          "knowsAbout": [
+            "APT29",
+            "APT28",
+            "Lazarus Group",
+            "APT41",
+            "Ransomware",
+            "Kill Chain",
+            "TTPs",
+            "Zero-Day"
+          ]
+        }
+        </script>
+        
+        <!-- Breadcrumb Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://purplehunt.es"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Servicios",
+            "item": "https://purplehunt.es#servicios"
+          },{
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Contacto",
+            "item": "https://purplehunt.es#contacto"
+          }]
+        }
+        </script>
+        
+        <!-- Organization Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "PurpleHunt.es",
+          "url": "https://purplehunt.es",
+          "logo": "https://purplehunt.es/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "ahfseguridad@gmail.com",
+            "contactType": "customer service",
+            "areaServed": "ES",
+            "availableLanguage": ["Spanish"]
+          },
+          "sameAs": []
+        }
+        </script>
+        
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
-        <!--
-        These two scripts have been added for the testing, please do not edit or remove them
-        -->
         <script src="https://unpkg.com/rrweb@latest/dist/rrweb.min.js"></script>
         <script src="https://d2adkz2s9zrlge.cloudfront.net/rrweb-recorder-20250919-1.js"></script>
-        <!--
-        These two scripts have been added for the Visual Edits, please do not edit or remove them
-        -->
+        
         <script>
-            // Only load visual edit scripts when inside an iframe and visual edits are enabled
             if (window.self !== window.top && '%REACT_APP_ENABLE_VISUAL_EDITS%' === 'true') {
-                // Load debug monitor script
                 var debugScript = document.createElement('script');
                 debugScript.src = 'https://assets.emergent.sh/scripts/debug-monitor.js';
                 document.head.appendChild(debugScript);
-
-                // Configure Tailwind
                 window.tailwind = window.tailwind || {};
                 tailwind.config = {
                     corePlugins: { preflight: false },
                 };
-
-                // Load Tailwind CDN
                 var tailwindScript = document.createElement('script');
                 tailwindScript.src = 'https://cdn.tailwindcss.com';
                 document.head.appendChild(tailwindScript);
@@ -50,18 +161,9 @@
         </script>
     </head>
     <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <noscript>Necesitas habilitar JavaScript para usar PurpleHunt.es - Servicios de ciberseguridad en Alicante.</noscript>
         <div id="root"></div>
-        <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        
         <a
             id="emergent-badge"
             target="_blank"
@@ -173,7 +275,7 @@
             })(document, window.posthog || []);
             posthog.init("phc_yJW1VjHGGwmCbbrtczfqqNxgBDbhlhOWcdzcIJEOTFE", {
                 api_host: "https://us.i.posthog.com",
-                person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
+                person_profiles: "identified_only",
             });
         </script>
     </body>
