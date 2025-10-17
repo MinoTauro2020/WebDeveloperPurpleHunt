@@ -5,6 +5,10 @@ import { Toaster } from "sonner";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
+import MethodologySection from "./components/MethodologySection";
+import APTGroupsSection from "./components/APTGroupsSection";
+import ThreatNewsSection from "./components/ThreatNewsSection";
+import GlossarySection from "./components/GlossarySection";
 import TestimonialsContactFooter from "./components/TestimonialsContactFooter";
 
 const Home = () => {
@@ -13,6 +17,10 @@ const Home = () => {
       <Header />
       <HeroSection />
       <ServicesSection />
+      <MethodologySection />
+      <APTGroupsSection />
+      <ThreatNewsSection />
+      <GlossarySection />
       <TestimonialsContactFooter />
     </div>
   );
