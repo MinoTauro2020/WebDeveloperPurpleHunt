@@ -206,7 +206,7 @@ def send_email_notification(contact_data: dict) -> bool:
         msg = MIMEMultipart('alternative')
         msg['From'] = gmail_user
         msg['To'] = gmail_user  # Enviamos el mensaje a nosotros mismos
-        msg['Subject'] = f"🔒 Nuevo mensaje de contacto - PurpleHunt.es"
+        msg['Subject'] = "🔒 Nuevo mensaje de contacto - PurpleHunt.es"
         
         # Crear el cuerpo del email en HTML
         html_body = f"""
