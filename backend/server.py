@@ -98,31 +98,37 @@ async def get_status_checks():
 @api_router.post("/contact", response_model=ContactResponse)
 async def create_contact(input: ContactCreate):
     """
-    Create a new contact message from the website form
+    Envía el mensaje de contacto por email a ahfseguridad@gmail.com
+    
+    IMPORTANTE: Antes de usar en producción, configura las credenciales en .env:
+    - GMAIL_USER=ahfseguridad@gmail.com
+    - GMAIL_APP_PASSWORD=tu_contraseña_de_aplicacion
     """
     try:
         contact_dict = input.model_dump()
-        contact_obj = Contact(**contact_dict)
         
-        # Convert to dict and serialize datetime to ISO string for MongoDB
-        doc = contact_obj.model_dump()
-        doc['created_at'] = doc['created_at'].isoformat()
+        # Enviar email
+        email_sent = send_email_notification(contact_dict)
         
-        # Insert into MongoDB
-        result = await db.contacts.insert_one(doc)
-        
-        if result.inserted_id:
-            logger.info(f"Contact message created: {contact_obj.id} from {contact_obj.email}")
+        if email_sent:
+            logger.info(f"Contact message received and email sent from {contact_dict['email']}")
             return ContactResponse(
                 success=True,
-                message="Mensaje enviado correctamente",
-                id=contact_obj.id
+                message="Mensaje enviado correctamente. Te responderemos pronto.",
+                id=str(uuid.uuid4())
             )
         else:
-            raise HTTPException(status_code=500, detail="Error al guardar el mensaje")
+            # Si falla el envío de email, informar al usuario
+            logger.error(f"Failed to send email for contact from {contact_dict['email']}")
+            raise HTTPException(
+                status_code=500, 
+                detail="Error al enviar el mensaje. Por favor, intenta de nuevo o contacta directamente a ahfseguridad@gmail.com"
+            )
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error creating contact: {str(e)}")
-        raise HTTPException(status_code=500, detail="Error al enviar el mensaje")
+        logger.error(f"Error processing contact: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error al procesar el mensaje")
 
 @api_router.get("/contact", response_model=List[Contact])
 async def get_contacts():
